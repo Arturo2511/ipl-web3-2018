@@ -29,8 +29,8 @@ db.connect().then((db) => {
   collection.countDocuments().then((res) => {
     if (res === 0) {
       collection.insertOne({
-        login: 'laurent',
-        password: 'laurent',
+        email: 'laurent@ipl.be',
+        password: '$2b$10$g2/XIWMv6xLnK02NGRulr.ysJYqlCLOyd53sDrSeb0XH2SaiMoC9O',
         firstName: 'Laurent',
         lastName: 'Leleux'
       }).catch((err) => {
