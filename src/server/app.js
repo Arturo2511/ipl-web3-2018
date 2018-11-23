@@ -38,6 +38,21 @@ db.connect().then((db) => {
       });
     }
   })
+  collection = db.collection('messages');
+  collection.countDocuments().then((res) => {
+    if (res <= 1) {
+      collection.insertOne({
+        body: 'Bonjour'
+      }).catch((err) => {
+        console.log('[App] Unable to insert first default message');
+      });
+      collection.insertOne({
+        body: 'Bonjour Discord'
+      }).catch((err) => {
+        console.log('[App] Unable to insert second default message');
+      });
+    }
+  })
 });
 
 const authMiddleware = (req, res, next) => {

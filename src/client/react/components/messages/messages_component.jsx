@@ -1,11 +1,15 @@
 import React from "react";
 import {Container, ListGroup} from 'react-bootstrap';
+import MessageForm from "./message_form";
 import MessageItem from './message_item';
 
 
 const MessagesComponent = ({
   messages,
-  deleteMessage,
+  addMessage,
+  handleChange,
+  currentText,
+  deleteMessage
 }) => {
   return (
     <Container>
@@ -19,6 +23,11 @@ const MessagesComponent = ({
           ))
         }
       </ListGroup>
+      <MessageForm
+            addMessage={addMessage}
+            handleChange={handleChange}
+            currentText={currentText}
+          />
     </Container>
   );
 };
