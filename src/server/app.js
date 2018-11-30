@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 var jwt = require('jsonwebtoken');
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
 const assetPath = require('./asset_path.js');
 
@@ -116,5 +118,30 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//discord Bot
+client.on('ready', () => {
+  console.log('[Discord] Client logged !');
+});
+client.on('message', msg => {
+  if (msg.content === '!bot') {
+    var auteur = msg.author;
+    msg.reply('Pour ajouter un message sur le site, entrez "!bot [Message]"');
+  }
+  var regex = /^!bot ./;
+  if(msg.content.match(regex)) {
+      //var contenu = msg.content.subtring(5);
+       db.connect().then((db) => {
+       collection = db.collection('messages');
+       collection.insertOne({
+         body: msg.author.username+' : '+msg.content.substring(5)
+       }).catch((err) => {
+         console.log('[App] Error in insert of message');
+       });
+     });
+    msg.reply('Votre message a bien été ajouté!');
+  }
+});
+client.login('NTE0NDMyMjE4MjQwNjQ3MTY5.DtWwOA.RtsYEH1tYfM9p5POOC5jSVHJNT0');
 
 module.exports = app;
